@@ -101,9 +101,10 @@ shinyServer(function(input, output, session){
   
   make_first_plot <- function(){
     if(input$mod_group){
+      my_alpha <- 1/ (nrow(model_fits())/5000)
     model_fits() %>% 
     ggplot(aes(grades, max_score, color = as.factor(group_membership)))+
-      geom_point(alpha = .5)+
+      geom_point(alpha = my_alpha)+
       labs(
         title = "Distribution of Scores",
         subtitle = "Line Represents Cutoff Threshold for Admission",
@@ -114,9 +115,10 @@ shinyServer(function(input, output, session){
       theme_minimal()+
       geom_smooth(method = "lm", se = FALSE)
     } else{
+      my_alpha <- 1/ (nrow(model_fits())/5000)
       model_fits() %>% 
         ggplot()+
-        geom_point(aes(grades, max_score, color = as.factor(group_membership)),alpha = .5)+
+        geom_point(aes(grades, max_score, color = as.factor(group_membership)),alpha = my_alpha)+
         labs(
           title = "Distribution of Scores",
           subtitle = "Line Represents Cutoff Threshold for Admission",
@@ -138,7 +140,8 @@ shinyServer(function(input, output, session){
                 avg_sat = mean(max_score),
                 admit = mean(admitted)*100) %>% 
       mutate_if(is.numeric, round, 2) %>% 
-      set_names(c("Group", "#", "Avg True Ability", "Avg Grades", "Avg SAT", "% Admit"))
+      set_names(c("Group", "#", "Avg True Ability", "Avg Grades", "Avg SAT", "% Admit")) %>% 
+      select(`Group`, `#`, `% Admit`, `Avg True Ability`, `Avg Grades`, `Avg SAT`)
   }
   
   output$initial_plot <- renderPlot({make_first_plot()})

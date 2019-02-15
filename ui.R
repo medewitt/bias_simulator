@@ -2,6 +2,7 @@ library(shiny)
 library(shinydashboard)
 library(tidyverse)
 library(plotly)
+library(shinyBS)
 
 shinydashboard::dashboardPage(skin = "yellow",
                               
@@ -24,7 +25,7 @@ shinydashboard::dashboardPage(skin = "yellow",
                                             h1("What this Application Does"),
                                             "The purpose of this app is to explore algorithmic bias. 
                                             Aaron Roth Developed a blog post that went through the basics of algorithmic bias. You can read that", 
-                                            a("here", target = "_blank", "http://aaronsadventures.blogspot.com/2019/01/discussion-of-unfairness-in-machine.html?m=1"),
+                                            a("here", target = "_blank", href = "http://aaronsadventures.blogspot.com/2019/01/discussion-of-unfairness-in-machine.html"),
                                             br(),
             
                                             h2("A motivating example"),
@@ -51,7 +52,7 @@ shinydashboard::dashboardPage(skin = "yellow",
                                             br(),
                                             box(h3("Population Inputs"),
                                                 sliderInput("n_samples", "Population Size", min = 1, max = 1e5, value = 1e4),
-                                                sliderInput("minority_perc", "% Minority Population", min = 1, max = 100, value = 50),
+                                                sliderInput("minority_perc", "% Minority Population", min = 1, max = 100, value = 20),
                                                 sliderInput("grade_noise", "Error of Grades", min = 1, max = 25, value = 15),
                                                 sliderInput("sat_noise", "Error of SAT", min = 1, max = 25, value = 15),
                                                 width = 6),
@@ -62,9 +63,12 @@ shinydashboard::dashboardPage(skin = "yellow",
                                                 sliderInput("intelligence_cut", "Intelligence Cutoff", min = 100, max = 200, value = 115),
                                                 h4("Ability Prediction"),
                                                 checkboxInput("mod_group", "Model by Group?", value = FALSE),
+                                                bsPopover("mod_group", "Note that modeling the two groups separately", 
+                                                          options = list(container = "body"), trigger = "hover"),
                                                 width = 6),
                                           box(plotOutput("initial_plot"), width = 12),
-                                          box(dataTableOutput("initial_statz"), width = 12))
+                                          box(dataTableOutput("initial_statz"), 
+                                              width = 12))
                                           )
                                   )
                                 

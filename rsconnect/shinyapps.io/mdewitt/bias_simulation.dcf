@@ -1,0 +1,13 @@
+name: bias_simulation
+title: bias_simulation
+username:
+account: mdewitt
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 675974
+bundleId: 1846043
+url: https://mdewitt.shinyapps.io/bias_simulation/
+when: 1548863411.94805
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: testing.R
